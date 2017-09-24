@@ -8,6 +8,7 @@ void print (string word);
 void print (float word);
 void print (string word, float a);
 float devide (float del, float div);
+inline float multiplex (float mux1, float mux2);
 
 //  Точка входа в программу. Входными аргументами являются:
 //  argc    - Количество переданных аргументов через командную строку, где 1-м аргументом является название самой программы
@@ -91,6 +92,84 @@ int main(int argc, char **argv) {
     // Выведем значение с текстом
     print( "5 : 2 =", devide(5,2) );
     
+    // Вычислим размеры типов переменных
+    print( "Type 'short    int'(byte): ", sizeof(short int) );
+    print( "Type '         int'(byte): ", sizeof(int) );
+    print( "Type 'unsigned int'(byte): ", sizeof(unsigned int) );
+    print( "Type 'long     int'(byte): ", sizeof(long int) );
+    print( "Type 'float'       (byte): ", sizeof(float) );
+    print( "Type 'double'      (byte): ", sizeof(double) );
+    print( "Type 'char'        (byte): ", sizeof(char) );
+    print( "Type 'bool'        (byte): ", sizeof(bool) );
+    
+    // Перечисляемые константы
+    enum color {RED, GREEN, BLUE, YELLOW, WHITE, BLACK = 100, MAGENTA};
+    cout << RED << GREEN << BLUE << YELLOW << WHITE << BLACK << MAGENTA << endl;
+    
+    // Старый метод (C) определения константы
+    #define maximusAge 13;
+    int maxBirthday = 2017 - maximusAge;
+    cout << maxBirthday << endl;
+    
+    // Вывод остатка от деления. Выведет остаток от деления 12 / 10 = 1 и 2 в остатке
+    cout << 12%10 << endl;
+    
+    // Варианты операций
+    i = j = 1 + 1;
+    int inc_v1 = i++;
+    cout << inc_v1 << endl;
+    int inc_v2 = ++i;
+    cout << inc_v2 << endl;
+    cout << inc_v1 * inc_v2 << endl;
+    inc_v1 += 2; // (inc_v1 = inc_v1 + 2)
+    inc_v2 /= 3; // (inc_v2 = inc_v2 / 3)
+    
+    // Проверка деления нацело
+    if ((inc_v1 % inc_v2) == 0) // Без остатка ?
+        print("without");
+    else
+        print("with");
+    
+    // Встраиваемая функция (inline)
+    cout << multiplex(5, 5) << endl;
+     
+    // Ессть даже цикл goto !!!
+    int count = 0;
+    prnloop:
+        cout << "Counter=" << count << endl;
+        count++;
+        if (count < 11) goto prnloop;
+        
+    // whitle loop with break & continue
+    int a, b, c = 0;
+    cout << "Input a: ";
+    cin >> a;
+    cout << "Input b: ";
+    cin >> b;
+    while (c < 64) {
+        c++;
+        if (a > b) {
+            cout << "a > b - Exit !!!" << endl;
+            break;
+        }
+        if (a == b) {
+            cout << "Inputed a = b" << endl;
+            b--;
+            continue;
+        }
+        a++;
+        cout << "a=" << a << " , b=" << b << endl;
+    }
+    
+    // Цикл for в одну строку
+    for (int j = 0; j < 10; cout << "j=" << j++ << endl);
+
+    // Логические операторы:
+    // && = AND(И)   выражение1 && выражение2
+    // || = OR (ИЛИ) выражение1 || выражение2
+    // !  = NOT(НЕ) !выражение
+    
+    
     // Завершим программу с кодом ошибки 0
     return 0;
 }
@@ -106,7 +185,7 @@ void print (string word) {
 }
 
 // Воспользуемся перегрузкой функции и сделаем вариант для печати 'float' значения
-void print (float word) {
+void print (float word) {   
     cout << word << endl;
 }
 
@@ -122,4 +201,9 @@ float devide (float del, float div) {
         return 0;
     else
         return del / div;
+}
+
+// Создадим встраиваемую функцию умножения 'multiplex' будет встраиваться в каждой точке вызова  - замена #define из C
+inline float multiplex (float mux1, float mux2) {
+    return mux1 * mux2;
 }
