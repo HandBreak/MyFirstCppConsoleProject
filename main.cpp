@@ -10,12 +10,89 @@ void print (string word, float a);
 float devide (float del, float div);
 inline float multiplex (float mux1, float mux2);
 
+//  Поупражняемся в создании классов..
+class Car {
+private:                // доступ к переменной или методу (функции) только в данном классе
+    int height;
+protected:              // доступ к переменной или методу (функции) в данном классе и наследуемых классах
+    float speed;
+public:                 // доступ к переменной или методу (функции) из любой точки программы
+    void setValues(int height, float speed) {
+        this->height = height;
+        this->speed = speed;
+    }
+    void print() {
+        cout << "Height = " << this->height << ", Speed = " << this->speed << endl;
+    }
+};
+
+// И ещё, но с конструктором и деструктором..
+class Dog {
+private:
+    int itsAge;
+    int itsWeight;
+    int itsHeight;
+public:
+    // Конструктор класса Dog, сразу задаёт значения
+    Dog (int itsAge, int itsHeight, int itsWeight) {
+        this->itsAge = itsAge;
+        this->itsHeight = itsHeight;
+        this->itsWeight = itsWeight;
+    }
+    
+    Dog () {
+    }
+    // Конец конструктора (по аналогии с перегрузкой функции можно задать варианты как с передачей параметров, так и без нее)
+    
+    void setValues(int itsAge, int itsWeight, int itsHeight) {
+        this->itsAge = itsAge;
+        this->itsHeight = itsHeight;
+        this->itsWeight = itsWeight;
+        
+        print();
+    }
+    void print() {
+        cout << "Here Age: " << this->itsAge << endl;
+        cout << "Here Weight: " << this->itsWeight << endl;
+        cout << "Here Height: " << this->itsHeight << endl;
+    }
+    
+    // Деструктор класса Dog. Отрабатывает по завершению работы с классом. Например по завершению работы программы.  Отрабатывает столько раз, сколько объектов класса создавалось...
+    ~Dog () {
+        cout << "Dog class destructed !" << endl;
+    }
+};
+
+
 //  Точка входа в программу. Входными аргументами являются:
 //  argc    - Количество переданных аргументов через командную строку, где 1-м аргументом является название самой программы
 //  **argv  - Указатель на массив строк, содержащий аргументы командной строки
 
 int main(int argc, char **argv) {
 
+    // Вставочка с тестированием классов и объектов
+    Car kia;
+    kia.setValues(1350, 142.5);
+    kia.print();
+    
+    Car opel;
+    opel.setValues(1410, 155.1);
+    opel.print();
+    
+    // Еще одна вставочка с тестированием классов и объектов
+    Dog sharik;
+    sharik.setValues(3, 10, 150);
+    sharik.print();
+    
+    // Тестируем класс, использующий конструктор
+    Dog atos(2, 25, 75);
+    atos.print();
+
+    Dog muhtar;
+    muhtar.setValues(1, 17, 89);
+
+
+      
     // Поприветствуем Мир
     cout << "Hello, world!" << endl;
 
@@ -164,6 +241,20 @@ int main(int argc, char **argv) {
     // Цикл for в одну строку
     for (int j = 0; j < 10; cout << "j=" << j++ << endl);
 
+    // Посмотрим модификации методов ввода cin:
+    char quote[32] ="";
+    cout << "Please input string: ";
+    cin.get();                      // сбросим буфер ввода
+    cin.getline(quote, 32);         // Считаем строку в пределах 32-х символов
+    cout << "\nInputed string: " << quote << endl;    
+
+    cout << "Please input string: ";
+    cin >> quote;
+    cout << "Inputed string: " << quote << endl;
+
+    // & перед переменной отдаёт индекс (адрес ячейки хранения данной переменной)
+    // * перед переменной означает, что переменной будет передан индекс на ячейку, в которой хранится переменная
+    // & перед переменной при присвоении ей значения, обозначет что передаётся ссылка на переменную (значение можно получить удалив & перед переменной)
     // Логические операторы:
     // && = AND(И)   выражение1 && выражение2
     // || = OR (ИЛИ) выражение1 || выражение2
